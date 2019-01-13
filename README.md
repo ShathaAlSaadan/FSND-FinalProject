@@ -1,6 +1,6 @@
 Project Description:
     Linux server configration project is aim to understanding of exactly what the web applications are doing, how they are hosted.
-I configured an Ubuntu Linux server instance on AmazoneLightsail and deployed a Flask app to the server.
+I configured an Ubuntu Linux server instance on AmazoneLightsail("https://lightsail.aws.amazon.com") and deployed a Flask app to the server.
 
 These are the information to access the server:
   1- IP Address: 52.57.244.53
