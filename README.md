@@ -96,4 +96,11 @@ Steps:
   13- Clone Item catalog project
       cd /var/www sudo git clone https://github.com/ShathaAlSaadan/FSND-Project2 catalog
       
+      
+      
+Third-party resources helped me with my project:
+    1- Slack channel.
+    2- other github repository.
+    3- Deploying to Linux Servers Lessons.
+      
 
