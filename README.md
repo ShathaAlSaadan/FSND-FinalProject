@@ -7,6 +7,7 @@ These are the information to access the server:
   2- SSH Port#: 2200
   3- User: grader, Password: grader
   4- Private key:
+  
     -----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEA6DDKIJo0m1d/E2WWadL3ctHkZIJZHr2AaJHXl9tKv4jd1Iqj
 QK1QUZUjtbtRq4/zm59BFUXxcRQMylB3B+LsdLCOcbhz7cf5aSMhFNjmWVtKcASg
@@ -36,6 +37,7 @@ WYf5vIbiL3IpjpvJ29oy5j3PS2r+nx6GRzubXfN2oYmD8U9oFvLh
 -----END RSA PRIVATE KEY-----
 
 5- Private & Public Key:
+
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCx0D4pkdh16zzSZ9VTvbqNCWrInJPKlRsuaGxJvpO$
     
     SHA256:UX6CrIzHJRapJ36arF3I1VOUi5Wu5Q0KA0qPezKneUA 
@@ -46,49 +48,74 @@ WYf5vIbiL3IpjpvJ29oy5j3PS2r+nx6GRzubXfN2oYmD8U9oFvLh
 Steps:
   1- Create a new Ubuntu Linux server instance on Amazon Lightsail.
   2- access the Linux server using the ssh command:  
+  
     ssh -i ~/.ssh/Key.pem  ubuntu@52.57.244.53
 
   3- update and upgrade all installed packages using:
+  
     sudo apt-get update & sudo apt-get upgrade
     
   4- Change the SSH port from 22 to 2200:
+  
     sudo nano /etc/ssh/sshd_config
 
-    and allow incomming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123):
+   and allow incomming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123):
+   
       sudo ufw allow 2200/tcp
       sudo ufw allow 80/tcp
       sudo ufw allow 123/udp
         
   5- Enble firewall:
+  
       sudo ufw enable
       sudo service ssh restart
       
   6- create new user "grader":
+  
      sudo adduser grader
      
-    Add sudo permission using the command "sudo nano /etc/sudoers" and add the following:
+   Add sudo permission using the command "sudo nano /etc/sudoers" and add the following:
+   
       grader ALL=(ALL) NOPASSWD:ALL
     
   7- Create an SSH key pair for grader using command:  
+  
       ssh-keygen.
       
   8- Configure the local timezone to UTC.
+  
       sudo dpkg-reconfigure tzdata
       
   9- install Apache2
+  
       sudo apt-get install apache2 libapache2-mod-wsgi-py3
       then restart it : sudo service apache2 restart
       
   10- install and configure postgresql.
+  
       sudo apt-get install postgresql
+   check if there is no remote connection: 
+   
+        sudo vim /etc/postgresql/9.3/main/pg_hba.conf
     
-  11- create catalog database & catalog user
-      sudo -u postgres psql
-      inside psql shell, run the following.
+  11- login as user into postgres & get into postgresql shell:
+  
+         sudo -u postgres psql
+         
+   craete new database "catalog" & create new user named "catalog":
 
-        create user catalog with password 'password';
-        create database catalog with owner catalog;
-          To exit shell command: \q
+        CREATE DATABASE catalog;
+        CREATE USER catalog;
+    
+   set a password for the new user:
+            
+         ALTER ROLE catalog WITH PASSWORD 'password';
+   Give the user permission to catalog DB:
+   
+        GRANT ALL PRIVILEGES ON DATABASE catalog TO catalog;
+        
+   To exit postgreSQL:   \q
+   Exit from user "postgres": exit
   
   12- install git
       sudo apt-get install git
