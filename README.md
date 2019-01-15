@@ -118,9 +118,30 @@ Steps:
    Exit from user "postgres": exit
   
   12- install git
+  
       sudo apt-get install git
+  Create FlaskApp.conf to configure the virtual host:
+  
+      sudo nano /etc/apache2/sites-available/FlaskApp.conf
+   
+  Create .wsgi File:
+  
+        sudo nano flaskapp.wsgi
+   add the following:
+   
+        #!/usr/bin/python
+         import sys
+        import logging
+        logging.basicConfig(stream=sys.stderr)
+        sys.path.insert(0,"/var/www/FlaskApp/")
+
+        from FlaskApp import app as application
+        application.secret_key = 'SHA256:UX6CrIzHJRapJ36arF3I1VOUi5Wu5Q0KA0qPezKneUA '
+
+       
       
   13- Clone Item catalog project
+  
       cd /var/www sudo git clone https://github.com/ShathaAlSaadan/FSND-Project2 catalog
       
       
